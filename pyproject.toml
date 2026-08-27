@@ -11,5 +11,8 @@ requires-python = ">=3.8"
 [project.optional-dependencies]
 test = ["pytest"]
 
+[project.scripts]
+qacalc = "qacalc.cli:main"
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/qacalc"]
