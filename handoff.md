@@ -1,24 +1,25 @@
-# Handoff: multiply and divide operations
+# Handoff: qacalc README
 
 ## Files touched
-- `src/qacalc/__init__.py` — added `multiply` and `divide`.
-- `tests/test_operations.py` — added tests for both, including divide-by-zero.
+- `README.md` — new, repo root.
 
 ## Interfaces introduced
-- `qacalc.multiply(a: float, b: float) -> float`
-- `qacalc.divide(a: float, b: float) -> float` — raises `ZeroDivisionError("division by zero: b must not be 0")` when `b == 0`.
+None — documentation only.
 
 ## Decisions
-- Mirrored the exact style of the existing `add`/`subtract` (same docstring format, blank-line spacing, type hints).
-- `divide` checks `b == 0` explicitly and raises `ZeroDivisionError` with a custom message, rather than letting Python's native `a / b` raise its own (less descriptive) `ZeroDivisionError`, per the acceptance criteria's "clear message" requirement.
-- Tests follow the existing `test_<op>_normal` / `_negative` / `_zero` naming convention; divide-by-zero test uses `pytest.raises(ZeroDivisionError)`.
+- Verified every claim by actually running code rather than reading source alone: fresh venv, `pip install -e ".[test]"`, executed each Python API call and each CLI command, captured real stdout/exit codes.
+- Documented `add`, `subtract`, `multiply`, `divide` in the Python API section (all four exist in `qacalc/__init__.py`), but the CLI section only shows `add`/`subtract` and explicitly notes `multiply`/`divide` are **not** wired into `cli.py`'s `OPERATIONS` dict — confirmed by running `qacalc multiply 2 3`, which fails with `invalid choice`. Documenting the mismatch instead of glossing over it.
+- `divide(6, 3)` example shows `2.0` (raw Python float, since the library returns a float via `print()`), distinct from the CLI's `format_result()` which would print `"2"` for a whole-number CLI result — kept both behaviors distinct and correct in their respective sections rather than conflating them.
+- Divide-by-zero example shows the real traceback with the exact custom message `division by zero: b must not be 0` (manually raised, not Python's default `ZeroDivisionError` text).
+- Install instructions say "not published to PyPI, install from source" since no PyPI/index config exists in `pyproject.toml` and only `pip install -e .` was verified to work.
 
 ## Deliberately not done
-- No changes to `pyproject.toml`, `.gitignore`, or CI — nothing here needed them.
-- No parametrized tests, no float-precision edge cases (e.g. divide producing non-terminating decimals) — matches the minimal style of the existing suite.
+- No CLI examples for `multiply`/`divide` since they don't exist as CLI subcommands — adding them would be inaccurate.
+- No badges, license, or contributing sections — nothing in the repo supports them and the acceptance criteria didn't ask for them.
 
 ## Verification
-- Installed in a scratch venv (`pip install -e ".[test]"`) and ran `pytest`: all 12 tests pass (6 pre-existing + 6 new). Scratch venv deleted afterward; no build artifacts left in the working tree (`git status` clean apart from the two edited files).
+- Ran a dedicated verification pass (separate from drafting) that independently re-read the source and re-ran every example in the drafted README against a fresh venv install. Result: "NO ISSUES FOUND" — all examples match real output exactly.
+- Full test suite also passes: `pytest -q` → 18 passed.
 
 ## Known gotchas
-- None. This change is purely additive and self-contained within `src/qacalc/` and `tests/`.
+None. Committed as `3bea642` on `tf/ec85927ec6ee` and pushed to origin.
