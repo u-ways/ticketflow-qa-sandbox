@@ -9,5 +9,8 @@ description = "A minimal calculator package."
 requires-python = ">=3.9"
 dependencies = []
 
+[project.scripts]
+qacalc = "qacalc.cli:main"
+
 [tool.setuptools.packages.find]
 where = ["src"]
