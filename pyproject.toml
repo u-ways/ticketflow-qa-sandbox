@@ -13,3 +13,6 @@ where = ["src"]
 
 [project.optional-dependencies]
 test = ["pytest"]
+
+[project.scripts]
+qacalc = "qacalc.cli:main"
