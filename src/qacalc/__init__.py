@@ -1,4 +1,4 @@
-"""Minimal calculator package exposing typed add and subtract functions."""
+"""Minimal calculator package exposing typed add, subtract, multiply, and divide functions."""
 
 from typing import Union
 
@@ -15,4 +15,20 @@ def subtract(a: Number, b: Number) -> Number:
     return a - b
 
 
-__all__ = ["add", "subtract"]
+def multiply(a: Number, b: Number) -> Number:
+    """Return the product of a and b."""
+    return a * b
+
+
+def divide(a: Number, b: Number) -> Number:
+    """Return the quotient of a and b.
+
+    Raises:
+        ZeroDivisionError: if b is zero.
+    """
+    if b == 0:
+        raise ZeroDivisionError(f"division by zero: {a} / {b}")
+    return a / b
+
+
+__all__ = ["add", "subtract", "multiply", "divide"]
